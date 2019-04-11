@@ -1,0 +1,13 @@
+{
+  "name": "btshunter-test-server",
+  "version": "1.0.0",
+  "description": "Server designed to test API from BTS Hunter device and demonstrate integrators how API calls are used in practice",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "http-shutdown": "^1.2.0",
+    "mongodb": "^3.2.3",
+    "socket.io": "^2.2.0"
+  }
+}
