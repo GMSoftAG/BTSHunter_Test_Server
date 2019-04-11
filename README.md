@@ -33,7 +33,7 @@ Next step is to install necessary modules. Navigate to cloned repository and run
 $ yarn install
 ```
 
-Finally, after exucuting above commands, open *config.js* file inside project folder. To use HTTP, set **config.https = false**. Otherwise, if you want to use HTTPS, set **config.https = true**. When using HTTPS, make sure to specify path to specify path to certificate and private key files inside using **config.ssl_cert** and **config.ssl_key** respectively. Set port number where you want to server to run **config.http_port** (if using HTTP) or **config.https_port** (if using HTTPS) respectively.
+Finally, after exucuting above commands, open *config.js* file inside project folder. To use HTTP, set **config.https = false**. Otherwise, if you want to use HTTPS, set **config.https = true**. When using HTTPS, make sure to specify path to certificate and private key files inside using **config.ssl_cert** and **config.ssl_key** respectively. Set port number where you want to server to run **config.http_port** (if using HTTP) or **config.https_port** (if using HTTPS) respectively.
 
 ### Running
 
