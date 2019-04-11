@@ -50,7 +50,7 @@ Next, navigate to a folder where you cloned the project and execute:
 $ node server.js
 ```
 You should see following output:
-![Alt text](https://github.com/GMSoftAG/BTSHunter_Test_Server/images/terminal_start.png "Terminal output when running project")
+![Alt text](https://github.com/GMSoftAG/BTSHunter_Test_Server/blob/master/images/terminal_start.PNG "Terminal output when running project")
 
 To verify that you server is running, open your browser and type in: 
 ```
@@ -59,4 +59,4 @@ To verify that you server is running, open your browser and type in:
 You should see empty webpage with **Server is running!** written.
 
 To stop server, press *Ctrl+C* multiple times until you see following output:
-![Alt text](https://github.com/GMSoftAG/BTSHunter_Test_Server/images/terminal_end.png "Terminal output when terminating project")
+![Alt text](https://github.com/GMSoftAG/BTSHunter_Test_Server/blob/master/images/terminal_end.PNG "Terminal output when terminating project")
