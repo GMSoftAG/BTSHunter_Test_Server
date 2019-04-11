@@ -10,6 +10,7 @@ const utils = require("./utils");
 const readline = require("readline");
 const fs = require("fs");
 const path = require("path");
+const config = require("./config");
 
 /* reading from console */
 const rl = readline.createInterface({
@@ -77,11 +78,9 @@ let sockets_map = new Map();
 
 /* importing SSL certificates */
 const https_options = {
-    key: fs.readFileSync(path.join(__dirname, 'https/key.pem'), 'utf8'),
-    cert: fs.readFileSync(path.join(__dirname, 'https/server.crt'), 'utf8')
+    key: fs.readFileSync(path.join(__dirname, config.ssl_key), 'utf8'),
+    cert: fs.readFileSync(path.join(__dirname, config.ssl_cert), 'utf8')
 };
-const https_port = 443;
-const http_port = 1234;
 
 /* connect to the database and start the server */
 const mongo_client = require('mongodb').MongoClient;
@@ -90,18 +89,19 @@ let db_client;
 let users_coll;
 function createServer() {
     return new Promise(function (resolve, reject) {
-        mongo_client.connect("mongodb://localhost:27017", function (err, database) {
+        mongo_client.connect("mongodb://" + config.mongo_url, function (err, database) {
             if (err) {
                 reject(err);
             } else {
                 db_client = database;
                 const db = database.db('btshunter_api_test');
                 users_coll = db.collection('users');
-                /* UNCOMMENT LINE BELOW TO RUN HTTP VERSION OF THE SERVER */
-                server = http.createServer(express);
+                if (config.https) {
+                    server = https.createServer(https_options, express);
+                } else {
+                    server = http.createServer(express);
+                }
                 const shutdown = http_shutdown(server);
-                /* UNCOMMENT LINE BELOW TO RUN HTTPS VERSION OF THE SERVER */
-                //const server = https.createServer(https_options, express);
                 server.on('error', err => {throw err;});
                 resolve(server);
             }
@@ -344,14 +344,15 @@ function launchApp() {
     const serverPromise = createServer();
     serverPromise.then(function(result) {
         setupSocketIo(result);
-        /* UNCOMMENT LINE BELOW IF YOU ARE USING HTTP VERSION */
-        result.listen(http_port, () => {
-            console.log("Server started at port " + http_port);
-        });
-        /* UNCOMMENT LINE BELOW IF YOU ARE USING HTTPS VERSION */
-        // result.listen(https_port, () => {
-        //     console.log("Server started at port " + https_port);
-        // });
+        if(config.https) {
+            result.listen(config.https_port, () => {
+                console.log("Server started at port " + config.https_port);
+            });
+        } else {
+            result.listen(config.http_port, () => {
+                console.log("Server started at port " + config.http_port);
+            });
+        }
     }, function(error) {
         console.log("Failed to start server!");
     });    
